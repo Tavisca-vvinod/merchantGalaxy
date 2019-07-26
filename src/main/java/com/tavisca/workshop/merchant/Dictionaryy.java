@@ -11,12 +11,33 @@ public class Dictionaryy {
         String[][] answer= WordsToCreditsParser.parse(input);
         int  number= Integer.parseInt(answer[1][0]);
         String roman=wordRoman.get(answer[0][0]) +wordRoman.get(answer[0][1]);
-        this.itemAmount.put(wordRoman.get(answer[1][1]),number/RomanToNumeral.convertToDecimal(roman));
+        this.itemAmount.put(answer[0][2],number/RomanToNumeral.convertToDecimal(roman));
         return number/RomanToNumeral.convertToDecimal(roman);
     }
 
     public int questionParser(String input) {
         int number=0;
+        String splits[]=QuestionsParser.parse(input);
+        if(splits[0].equals("much"))
+        {
+            String roman="";
+            String furtherSplits[]=splits[1].split(" ");
+            for(String word : furtherSplits)
+            {
+                roman=roman+this.wordRoman.get(word);
+            }
+            System.out.println(roman);
+            number=RomanToNumeral.convertToDecimal(roman);
+        }
+        else if (splits[0].equals("many"))
+        {
+            String roman="";
+            String furtherSplits[]=splits[1].split(" ");
+            roman=roman+this.wordRoman.get(furtherSplits[0])+this.wordRoman.get(furtherSplits[1]);
+            number=RomanToNumeral.convertToDecimal(roman);
+            System.out.println(number);
+            number=number*this.itemAmount.get(furtherSplits[2]);
+        }
         return number;
     }
 }

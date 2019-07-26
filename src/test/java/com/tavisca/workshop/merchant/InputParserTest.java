@@ -34,11 +34,30 @@ public class InputParserTest {
         String command1= "glob is I";
         String command2="prok is V";
         String command3="pish is X";
+        String command4="tegj is L";
         command.wordRoman.put(WordToRomanParser.parse(command1)[0],WordToRomanParser.parse(command1)[1]);
         command.wordRoman.put(WordToRomanParser.parse(command2)[0],WordToRomanParser.parse(command2)[1]);
         command.wordRoman.put(WordToRomanParser.parse(command3)[0],WordToRomanParser.parse(command3)[1]);
+        command.wordRoman.put(WordToRomanParser.parse(command4)[0],WordToRomanParser.parse(command4)[1]);
         int number= command.questionParser("how much is pish tegj glob glob ?");
-
+        assertEquals(42,number);
+    }
+    @Test
+    public void answersQuestionTypeMany()
+    {
+        Dictionaryy command=new Dictionaryy();
+        String command1= "glob is I";
+        String command2="prok is V";
+        String command3="pish is X";
+        String command4="tegj is L";
+        command.wordRoman.put(WordToRomanParser.parse(command1)[0],WordToRomanParser.parse(command1)[1]);
+        command.wordRoman.put(WordToRomanParser.parse(command2)[0],WordToRomanParser.parse(command2)[1]);
+        command.wordRoman.put(WordToRomanParser.parse(command3)[0],WordToRomanParser.parse(command3)[1]);
+        command.wordRoman.put(WordToRomanParser.parse(command4)[0],WordToRomanParser.parse(command4)[1]);
+        command.convert("glob glob Silver is 34 Credits");
+        command.convert("glob prok Gold is 57800 Credits");
+        assertEquals(68,command.questionParser("how many Credits is glob prok Silver ?"));
+        assertEquals(57800,command.questionParser("how many Credits is glob prok Gold ?"));
     }
     @Test
     public void canGetNumberFromCommandTwoType()
