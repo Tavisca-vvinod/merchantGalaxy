@@ -5,39 +5,35 @@ import java.util.HashMap;
 
 public class Dictionaryy {
     public  HashMap<String, String> wordRoman= new HashMap<String, String>();
-    public  HashMap<String, Integer> itemAmount= new HashMap<String, Integer>();
-    public int convert(String input)
+    public  HashMap<String, Float> itemAmount= new HashMap<String, Float>();
+    public float convert(String input)
     {
         String[][] answer= WordsToCreditsParser.parse(input);
         int  number= Integer.parseInt(answer[1][0]);
         String roman=wordRoman.get(answer[0][0]) +wordRoman.get(answer[0][1]);
-        this.itemAmount.put(answer[0][2],number/RomanToNumeral.convertToDecimal(roman));
-        return number/RomanToNumeral.convertToDecimal(roman);
+        this.itemAmount.put(answer[0][2],(float)number/(float)RomanToNumeral.convertToDecimal(roman));
+        return (float)number/(float)RomanToNumeral.convertToDecimal(roman);
     }
 
-    public int questionParser(String input) {
-        int number=0;
-        String splits[]=QuestionsParser.parse(input);
-        if(splits[0].equals("much"))
-        {
-            String roman="";
-            String furtherSplits[]=splits[1].split(" ");
-            for(String word : furtherSplits)
-            {
-                roman=roman+this.wordRoman.get(word);
+    public float questionParser(String input) {
+            float number = 0;
+            String splits[] = QuestionsParser.parse(input);
+            if (splits[0].equals("much")) {
+                String roman = "";
+                String furtherSplits[] = splits[1].split(" ");
+                for (String word : furtherSplits) {
+                    roman = roman + this.wordRoman.get(word);
+                }
+                System.out.println(roman);
+                number = RomanToNumeral.convertToDecimal(roman);
+            } else if (splits[0].equals("many")) {
+                String roman = "";
+                String furtherSplits[] = splits[1].split(" ");
+                roman = roman + this.wordRoman.get(furtherSplits[0]) + this.wordRoman.get(furtherSplits[1]);
+                number = RomanToNumeral.convertToDecimal(roman);
+                System.out.println(number);
+                number = number * this.itemAmount.get(furtherSplits[2]);
             }
-            System.out.println(roman);
-            number=RomanToNumeral.convertToDecimal(roman);
-        }
-        else if (splits[0].equals("many"))
-        {
-            String roman="";
-            String furtherSplits[]=splits[1].split(" ");
-            roman=roman+this.wordRoman.get(furtherSplits[0])+this.wordRoman.get(furtherSplits[1]);
-            number=RomanToNumeral.convertToDecimal(roman);
-            System.out.println(number);
-            number=number*this.itemAmount.get(furtherSplits[2]);
-        }
-        return number;
+            return number;
     }
 }

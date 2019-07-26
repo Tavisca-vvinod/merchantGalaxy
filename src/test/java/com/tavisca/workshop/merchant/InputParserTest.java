@@ -39,8 +39,8 @@ public class InputParserTest {
         command.wordRoman.put(WordToRomanParser.parse(command2)[0],WordToRomanParser.parse(command2)[1]);
         command.wordRoman.put(WordToRomanParser.parse(command3)[0],WordToRomanParser.parse(command3)[1]);
         command.wordRoman.put(WordToRomanParser.parse(command4)[0],WordToRomanParser.parse(command4)[1]);
-        int number= command.questionParser("how much is pish tegj glob glob ?");
-        assertEquals(42,number);
+        float number= command.questionParser("how much is pish tegj glob glob ?");
+        assertEquals(42.0,number,0.0);
     }
     @Test
     public void answersQuestionTypeMany()
@@ -56,8 +56,15 @@ public class InputParserTest {
         command.wordRoman.put(WordToRomanParser.parse(command4)[0],WordToRomanParser.parse(command4)[1]);
         command.convert("glob glob Silver is 34 Credits");
         command.convert("glob prok Gold is 57800 Credits");
-        assertEquals(68,command.questionParser("how many Credits is glob prok Silver ?"));
-        assertEquals(57800,command.questionParser("how many Credits is glob prok Gold ?"));
+        command.convert("pish pish Iron is 3910 Credits");
+        assertEquals(68.0,command.questionParser("how many Credits is glob prok Silver ?"),0.0);
+        assertEquals(57800.0,command.questionParser("how many Credits is glob prok Gold ?"),0.0);
+        assertEquals(782.0,command.questionParser("how many Credits is glob prok Iron ?"),0.0);
+    }
+    @Test(expected = NullPointerException.class)
+    public void iHaveNoIdea() {
+        Dictionaryy command = new Dictionaryy() ;
+        command.questionParser("how many Credits is glob prok Silver ?");
     }
     @Test
     public void canGetNumberFromCommandTwoType()
@@ -69,8 +76,8 @@ public class InputParserTest {
         command.wordRoman.put(WordToRomanParser.parse(command1)[0],WordToRomanParser.parse(command1)[1]);
         command.wordRoman.put(WordToRomanParser.parse(command2)[0],WordToRomanParser.parse(command2)[1]);
         command.wordRoman.put(WordToRomanParser.parse(command3)[0],WordToRomanParser.parse(command3)[1]);
-        assertEquals(17,command.convert("glob glob Silver is 34 Credits"));
-        assertEquals(14450,command.convert("glob prok Gold is 57800 Credits"));
-        assertEquals(195,command.convert("pish pish Iron is 3910 Credits"));
+        assertEquals(17.0,command.convert("glob glob Silver is 34 Credits"),0.0);
+        assertEquals(14450.0,command.convert("glob prok Gold is 57800 Credits"),0.0);
+        assertEquals(195.5,command.convert("pish pish Iron is 3910 Credits"),0.0);
     }
 }
