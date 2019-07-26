@@ -28,6 +28,19 @@ public class InputParserTest {
         assertArrayEquals(new String[]{"much","pish tegj glob glob"},QuestionsParser.parse("how much is pish tegj glob glob ?"));
     }
     @Test
+    public void answersQuestionTypeMuch()
+    {
+        Dictionaryy command=new Dictionaryy();
+        String command1= "glob is I";
+        String command2="prok is V";
+        String command3="pish is X";
+        command.wordRoman.put(WordToRomanParser.parse(command1)[0],WordToRomanParser.parse(command1)[1]);
+        command.wordRoman.put(WordToRomanParser.parse(command2)[0],WordToRomanParser.parse(command2)[1]);
+        command.wordRoman.put(WordToRomanParser.parse(command3)[0],WordToRomanParser.parse(command3)[1]);
+        int number= command.questionParser("how much is pish tegj glob glob ?");
+
+    }
+    @Test
     public void canGetNumberFromCommandTwoType()
     {
         Dictionaryy command=new Dictionaryy();
