@@ -20,26 +20,12 @@ configure<JavaPluginConvention> {
     targetCompatibility = JavaVersion.VERSION_1_8
 }
 
-tasks.register<Test>("hidden-tests")
 
 tasks.named<Test>("test") {
     dependsOn("cleanTest")
     useJUnitPlatform {
         includeEngines("junit-jupiter")
         excludeTags("hidden")
-    }
-
-    testLogging {
-        showExceptions = true
-        events("passed", "skipped", "failed")
-    }
-}
-
-
-tasks.named<Test>("hidden-tests") {
-    useJUnitPlatform {
-        includeEngines("junit-jupiter")
-        includeTags("hidden")
     }
 
     testLogging {

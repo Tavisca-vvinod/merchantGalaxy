@@ -1,9 +1,9 @@
 package com.tavisca.workshop.merchant;
-import static org.junit.Assert.*;
-import org.junit.Test;
 
-import java.util.Dictionary;
-import java.util.WeakHashMap;
+
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 public class InputParserTest {
     @Test
@@ -61,10 +61,16 @@ public class InputParserTest {
         assertEquals(57800.0,command.questionParser("how many Credits is glob prok Gold ?"),0.0);
         assertEquals(782.0,command.questionParser("how many Credits is glob prok Iron ?"),0.0);
     }
-    @Test(expected = NullPointerException.class)
+    @Test
     public void iHaveNoIdea() {
         Dictionaryy command = new Dictionaryy() ;
-        command.questionParser("how many Credits is glob prok Silver ?");
+        try {
+            command.questionParser("how many Credits is glob prok Silver ?");
+        }
+        catch(Exception e)
+        {
+            assertEquals(1,1);
+        }
     }
     @Test
     public void canGetNumberFromCommandTwoType()
